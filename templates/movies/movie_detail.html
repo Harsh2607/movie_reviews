@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ movie.title }}{% endblock %}
+{% block content %}
+<h2>{{ movie.title }}</h2>
+<p>{{ movie.description }}</p>
+<p>Release Date: {{ movie.release_date }}</p>
+<img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+<h3>Reviews</h3>
+<a href="{% url 'add_review' movie.pk %}">Add Review</a>
+<ul>
+    {% for review in movie.reviews_by_movie.all %}
+    <li>
+        <p>Rating: {{ review.rating }}</p>
+        <p>Comment: {{ review.comment }}</p>
+        <p>By: {{ review.user.email }}</p>
+    </li>
+    {% empty %}
+    <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
